@@ -71,7 +71,7 @@ public class RSLocation {
     }
     
     @GET
-    @Path("username/{username}")
+    @Path("/username/{username}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Location> getAllLocationsJSONorXML(@PathParam("username") String username) {
         System.out.println("getAllLocationsForSpecificUserJSONorXML");
@@ -129,10 +129,7 @@ public class RSLocation {
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response putLocationJSONorXML(@PathParam("uli") String uli, Location loc, @Context UriInfo context) {
         System.out.println("putLocationJSONorXML");
-        if(!loc.getULI().equals(uli)){
-            return Response.notAcceptable(null).build();
-        }
-        else if (locations.containsKey(uli) == true) {
+        if (locations.containsKey(uli) == true) {
             locations.put(uli, loc);
             return Response.ok().build();
         } else {
