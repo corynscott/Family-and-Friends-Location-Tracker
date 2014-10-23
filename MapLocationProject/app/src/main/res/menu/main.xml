@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MapActivity" >
+    <item android:id = "@+id/auth_update"
+        android:title="Update ON"
+        android:orderInCategory="100"
+        android:onClick="startUpdates"/>
+    <item android:id = "@+id/stop_update"
+        android:title="Update OFF"
+        android:orderInCategory="100"
+        android:onClick="stopUpdates"/>
+    <!--<item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />-->
+</menu>
