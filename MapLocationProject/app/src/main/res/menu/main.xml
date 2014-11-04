@@ -10,6 +10,14 @@
         android:title="Update OFF"
         android:orderInCategory="100"
         android:onClick="stopUpdates"/>
+    <item android:id = "@+id/getLocationULI"
+        android:title="ULI Location"
+        android:orderInCategory="100"
+        android:onClick="getLocationULI"/>
+    <item android:id = "@+id/getLocationALL"
+        android:title="ULI Location"
+        android:orderInCategory="100"
+        android:onClick="getLocationALL"/>
     <!--<item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"

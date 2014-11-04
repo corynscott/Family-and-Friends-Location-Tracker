@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -24,6 +25,8 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -33,8 +36,10 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by alex64 on 16/10/2014.
@@ -56,13 +61,17 @@ public class MapActivity extends FragmentActivity implements
 
     boolean updateRequested;
 
+    private UserLocation userLocation = null;
+    private Client client = new Client();
+
+    JsonAdapter mJsonAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
 
         setLocationAttributes();
-
 
         try {
             // Loading map
@@ -91,6 +100,13 @@ public class MapActivity extends FragmentActivity implements
                 return true;
             case R.id.stop_update:
                 stopUpdates();
+                return true;
+            case R.id.getLocationULI:
+                getLocationULI();
+                return true;
+            case R.id.getLocationALL:
+                getLocationALL();
+                locationMarkers();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -179,11 +195,14 @@ public class MapActivity extends FragmentActivity implements
     @Override
     public void onLocationChanged(Location location){
         Log.d("Lon, Lat", "" + location.getLongitude() + "-" + location.getLatitude());
+        //Define the user location
+        userLocation = new UserLocation("alex", String.valueOf(location.getTime()), location.getLongitude(), location.getLatitude());
         //Code to store information on the Rest web service
-        storeLocation(location);
+        //storeLocation(location);
+        client.putLocation(userLocation, this.getApplicationContext());
     }
 
-    public String getULI(String time){
+    /*public String getULI(String time){
         Date d = new Date(Long.parseLong(time));
         Calendar cal = Calendar.getInstance();
         cal.setTime(d);
@@ -192,14 +211,13 @@ public class MapActivity extends FragmentActivity implements
         day = cal.get(Calendar.DAY_OF_MONTH);
         hour = cal.get(Calendar.HOUR);
         minute = cal.get(Calendar.MINUTE);
-        second = cal.get(Calendar.SECOND);;
-        String uli = "" + cal.get(Calendar.YEAR) +
+        second = cal.get(Calendar.SECOND);
+        return "" + cal.get(Calendar.YEAR) +
                 ((month < 10) ?  "0" + month :   month) +
                 ((day < 10) ?  "0" + day :   day) +
                 ((hour < 10) ?  "0" + hour :   hour) +
                 ((minute < 10) ?  "0" + minute :   minute) +
                 ((second < 10) ?  "0" + second :   second);
-        return uli;
     }
 
     public String getDate(String time){
@@ -214,8 +232,8 @@ public class MapActivity extends FragmentActivity implements
 
     public void storeLocation(Location location){
         Context context = this.getApplicationContext();
-        String uli = "";
-        String url = "";
+        String uli;
+        String url;
         AsyncHttpClient client = new AsyncHttpClient();
         JSONObject jsonParams = new JSONObject();
         try{
@@ -246,12 +264,12 @@ public class MapActivity extends FragmentActivity implements
             });
         }
         catch(JSONException e){
-
+            Log.d("Exception", "JSON exception");
         }
         catch(UnsupportedEncodingException e){
-
+            Log.d("Exception", "UnsupportedEncoding exception");
         }
-    }
+    }*/
 
     @SuppressLint("NewApi")
     public void getAddress(View v){
@@ -325,5 +343,35 @@ public class MapActivity extends FragmentActivity implements
             stopPeriodicUpdates();
         }
         super.onStop();
+    }
+
+    public void getLocationULI(){
+        client.getLocationULI(this.getApplicationContext());
+    }
+
+    public void getLocationALL(){
+        client.getLocationAll();
+    }
+
+    public void locationMarkers(){
+        ArrayList<HashMap<String, String>> locationList = client.getLocationList();
+        Log.d("get result", "result");
+        MarkerOptions marker;
+        String latitude;
+        String longitude;
+        String username;
+        String time;
+        for(int i = 0; i < locationList.size(); i++){
+            // create marker
+            //MarkerOptions marker = new MarkerOptions().position(new LatLng(lat, lon)).title("Hello Maps ");
+            // adding marker
+            //googleMap.addMarker(marker);
+            latitude = locationList.get(i).get("latitude");
+            longitude = locationList.get(i).get("longitude");
+            username = locationList.get(i).get("username");
+            time = locationList.get(i).get("time");
+            marker = new MarkerOptions().position(new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude))).title(username + "\n" + time);
+            googleMap.addMarker(marker);
+        }
     }
 }
