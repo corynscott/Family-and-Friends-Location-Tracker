@@ -41,7 +41,6 @@ public class TestRegister extends ActionBarActivity{
         	 */
             @Override
             public void onReceive(Context arg0, Intent arg1){
-                //String phone = "07517217601";
                 switch(getResultCode()){
                     case Activity.RESULT_OK:
                         Log.d("message", "Sent");
