@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id = "@+id/check_in"
+    android:background="#ffffff">
+
+    <TextView
+        android:id="@+id/check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|top"
+        android:text="CheckIn"
+        android:textSize="30sp"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_below="@+id/check"/>
+
+    <EditText
+        android:id = "@+id/name_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinner"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:id = "@+id/experience_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_location"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id = "@+id/checkin_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/experience_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text = "@string/checkin_button"
+        android:onClick="functionCheckin"/>
+
+    <Button
+        android:id = "@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/experience_text"
+        android:layout_toRightOf="@id/checkin_button"
+        android:text = "@string/cancel_button"
+        android:onClick = "functionCancelCheckin"/>
+
+</RelativeLayout>
