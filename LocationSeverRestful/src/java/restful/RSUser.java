@@ -60,7 +60,7 @@ public class RSUser {
         if(ussb.doesUsernameExist(user.getUsername())){
             return Response.status(409).build();
         }
-        if(ussb.addUser(user.getName(), user.getUsername(), user.getPassword(),user.getPhoneNumber())){
+        if(ussb.addUser(user.getName(), user.getUsername(), user.getPassword(),modifyNumber(user.getPhoneNumber()))){
             try {
                 return Response.created(new URI(context.getRequestUri().toString() + user.getUsername())).entity(user).build();
             } catch (URISyntaxException ex) {
@@ -86,5 +86,12 @@ public class RSUser {
         return Response.status(401).build();
         
         
+    }
+    public String modifyNumber(String number){
+        if(number.startsWith("0")){
+            return "+44" + number.substring(1);
+        }
+        else
+            return number;
     }
 }

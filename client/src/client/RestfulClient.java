@@ -30,7 +30,7 @@ import org.apache.http.message.BasicNameValuePair;
  */
 public class RestfulClient {
 
-    String ROOTURL = "http://54.171.93.166:8080/LocationSeverRestful/";
+    String ROOTURL = "http://localhost:8080/LocationSeverRestful/";
 
     public void addUser(String name,String password,String phoneNumber, String username) {
         try {

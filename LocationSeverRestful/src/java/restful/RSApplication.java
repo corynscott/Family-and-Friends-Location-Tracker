@@ -24,6 +24,7 @@ public class RSApplication extends Application{
      //register root resource 
      classes.add(RSUser.class); 
      classes.add(RSLocation.class); 
+     classes.add(RSFriends.class);
      return classes; 
    } 
 
@@ -33,6 +34,7 @@ public class RSApplication extends Application{
      * given list with all resources defined in the project.
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(restful.RSFriends.class);
         resources.add(restful.RSLocation.class);
         resources.add(restful.RSUser.class);
     }

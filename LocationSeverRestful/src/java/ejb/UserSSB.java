@@ -78,6 +78,16 @@ public class UserSSB {
             return true;
         }
     }
+    
+    public synchronized AppUser getUserByPhoneNumber(String phoneNumber){
+        List<AppUser> users = em.createNamedQuery("getUserByPhoneNumber").setParameter("phoneNumber", phoneNumber).getResultList();
+        if (users.isEmpty()) {
+               return null;
+        } 
+        else {
+            return users.get(0);
+        }
+    }
 
     public synchronized String encryptPassword(String plainTextPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException{
             MessageDigest md;

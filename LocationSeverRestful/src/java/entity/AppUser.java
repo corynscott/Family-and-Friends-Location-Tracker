@@ -4,6 +4,7 @@
  */
 package entity;
 
+import friend.FriendBond;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @NamedQueries({
         @NamedQuery(name="getUser",query="SELECT u FROM AppUser u WHERE u.username = :username"),
-
+        @NamedQuery(name="getUserByPhoneNumber",query="SELECT u FROM AppUser u WHERE u.phoneNumber = :phoneNumber"),
         @NamedQuery(name="getAllUsers",query="SELECT u FROM AppUser u WHERE u.username != 'admin'"),
 })
 @Entity
@@ -50,6 +51,8 @@ public class AppUser implements Serializable {
     
     @OneToMany(mappedBy = "appUser")
     private List<Location> checkIns;
+    
+    private List<FriendBond> friendRequest;
 
     public AppUser() {
     }
