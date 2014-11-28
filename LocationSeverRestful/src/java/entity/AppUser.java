@@ -6,6 +6,7 @@ package entity;
 
 import friend.FriendBond;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -52,6 +54,9 @@ public class AppUser implements Serializable {
     @OneToMany(mappedBy = "appUser")
     private List<Location> checkIns;
     
+    @OneToOne
+    private List<AppUser> friends;
+    
     private List<FriendBond> friendRequest;
 
     public AppUser() {
@@ -62,6 +67,7 @@ public class AppUser implements Serializable {
         this.username = username;
         this.password = password;
         this.phoneNumber = phoneNumber;
+        friendRequest = new ArrayList();
     }
     
     @XmlAttribute
@@ -117,11 +123,64 @@ public class AppUser implements Serializable {
     public List<Location> getCheckIns() {
         return checkIns;
     }
+    @XmlTransient
+    public List<AppUser> getFriends() {
+        return friends;
+    }
+    
+    public void addFriend(AppUser au){
+        friends.add(au);
+    }
+
+    public void setFriends(List<AppUser> friends) {
+        this.friends = friends;
+    }
+    
+    public boolean isFriend(String username) {
+        for(AppUser au:friends){
+            if(au.username.equals(username)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
 
     public void setCheckIns(List<Location> checkIns) {
         this.checkIns = checkIns;
     }
+    @XmlTransient
+    public List<FriendBond> getFriendRequest() {
+        return friendRequest;
+    }
+    
+    public void addFriendRequest(FriendBond fb){
+        friendRequest.add(fb);
+    }
+    
+    public void removeFriendRequest(FriendBond fb){
+        friendRequest.remove(fb);
+    }   
+    public void removeFriendRequest(String username, String username1){
+        int indexrem ;
+        for(int i=0;i<friendRequest.size();i++){
+            FriendBond fb = friendRequest.get(i);
+            if(fb.getInitUsername().equals(username)&&fb.getRecpUsername().equals(username1)){
+                friendRequest.remove(i);
+        
+            }
+            else if(fb.getInitUsername().equals(username1)&&fb.getRecpUsername().equals(username)){
+                friendRequest.remove(i);
+        
+            }
+        }
+    }   
+    
+    public void setFriendRequest(List<FriendBond> friendRequest) {
+        this.friendRequest = friendRequest;
+    }
 
+    
     
     @Override
     public int hashCode() {

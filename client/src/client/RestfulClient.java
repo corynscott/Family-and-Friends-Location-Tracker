@@ -30,7 +30,7 @@ import org.apache.http.message.BasicNameValuePair;
  */
 public class RestfulClient {
 
-    String ROOTURL = "http://localhost:8080/LocationSeverRestful/";
+    String ROOTURL = "http://54.171.93.166:8080/LocationSeverRestful/";
 
     public void addUser(String name,String password,String phoneNumber, String username) {
         try {
@@ -156,16 +156,16 @@ public class RestfulClient {
     public static void main(String[] args) {
         RestfulClient rc = new RestfulClient();
         System.out.println("---------------------");
-        rc.addUser("coryn","password","077","coryns");
+        rc.addUser("justin","password1","076","justin");
         System.out.println("---------------------");
-        rc.loginUser("coryns","password");
+        rc.loginUser("justin","password1");
         System.out.println("---------------------");
-        rc.addLocation("coryns","0001","0002000","no comment","2014-11-17T00:00:00Z","placea");
+        rc.addLocation("justin","000341","000205300","justinno comment","2014-11-17T00:00:00Z","pladcea");
         System.out.println("---------------------");
-        rc.addCheckIn("coryns","0001","0002000","HEllo","2014-11-17T00:00:00Z", "placeb");
+        rc.addCheckIn("justin","0001","0002000","HEllo this is james","2014-11-17T00:00:00Z", "placdfeb");
         System.out.println("---------------------");
-        rc.getUserCheckIns("coryns");
+        rc.getUserCheckIns("justin");
         System.out.println("---------------------");
-        rc.getUserLocations("coryns");
+        rc.getUserLocations("justin");
     }
 }

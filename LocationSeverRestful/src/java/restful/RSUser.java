@@ -57,6 +57,7 @@ public class RSUser {
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response addNewUserJsonorXML(AppUser user, @Context UriInfo context){
         System.out.println("contetn"+user.getName()+user.getUsername()+user.getPassword()+user.getPhoneNumber());
+        System.out.println(ussb.doesUsernameExist(user.getUsername()));
         if(ussb.doesUsernameExist(user.getUsername())){
             return Response.status(409).build();
         }
