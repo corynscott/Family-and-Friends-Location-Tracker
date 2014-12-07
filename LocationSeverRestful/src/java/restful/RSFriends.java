@@ -26,7 +26,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
- *
+ * This Class Provides a Restful interface to the system, specifically for friends interactions, with the path /friends
  * @author Coryn Scott
  */
 @Singleton
@@ -38,6 +38,15 @@ public class RSFriends {
     @EJB
     LocationSSB lssb;
 
+    /**
+     * Post method for getting a list of potential friends, the client sends a list of UsernameNumbers with empty usernames, this method looks up the numbers its been sent by the client and responds with a refined list of UsernameNumbers where the telephone number matches a user on the system.
+     * For Example Client sends (Username:" ",Number"0770000001")
+     * Response (Username:"John",Number"0770000001")
+     * @param numbers the list of numbers that the client want to look up
+     * @param username the username of the client
+     * @param context context path
+     * @return List of UsernameNumbers where the username 
+     */
     @POST
     @Path("{username}/potentialfriends")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -53,6 +62,12 @@ public class RSFriends {
         return usernameNumbers;
     }
     
+    /**
+     * Get method to get all usernames and numbers on the system, used for testing.
+     * @param username username of the client
+     * @param context context of the request
+     * @return List of UsernameNumbers for all users on the system
+     */
     @GET
     @Path("{username}/allnumbers")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -68,6 +83,13 @@ public class RSFriends {
         return usernameNumbers;
     }
 
+    /**
+     * Get method for requesting a friendship, based on the clients username (initUsername) and the other user they want to befriend (recpUsername).
+     * @param initUsername client username
+     * @param recpUsername username of user the client wants to befriend
+     * @param context context of the request
+     * @return Response OK - if the request is successful, NOTMODIFIED- if the username don't exist or the request has already been made or if the users are already friends.
+     */
     @GET
     @Path("{initUsername}/requestfriend/{recpUsername}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -98,6 +120,12 @@ public class RSFriends {
 
     }
 
+    /**
+     * Get method for getting a list of pending friends, i.e. the list of friend requests.
+     * @param username clients username
+     * @param context context of the request
+     * @return List of FriendBonds for all of the pending friends.
+     */
     @GET
     @Path("{username}/pendingfriends")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -111,6 +139,12 @@ public class RSFriends {
 
     }
     
+    /**
+     * Get method for getting a list of user's friends 
+     * @param username of the client
+     * @param context context of the request
+     * @return List of AppUsers, one for each friend, or null if the user has no friends.
+     */
     @GET
     @Path("{username}/friends")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -129,6 +163,13 @@ public class RSFriends {
 
     }
 
+    /**
+     * Get method to Accept a friend request.
+     * @param initUsername the username of the user who requested the friendship.
+     * @param recpUsername the username of the user who has been request to be a friend.
+     * @param context context of the request.
+     * @return Response OK - friendship has been successful, NOTMODIFIED if the request between these two users is not present.
+     */
     @GET
     @Path("{recpUsername}/acceptfriend/{initUsername}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -153,7 +194,14 @@ public class RSFriends {
         return Response.notModified().build();
     }
     
-     @GET
+     /**
+     * Get method to reject a friend request.
+     * @param initUsername the username of the user who requested the friendship.
+     * @param recpUsername the username of the user who has been request to be a friend.
+     * @param context context of the request.
+     * @return Response OK - friendship has been successfully been declined, NOTMODIFIED if the request between these two users is not present.
+     */
+    @GET
     @Path("{recpUsername}/declinefriend/{initUsername}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response declineFriendrequestJsonOrXML(@PathParam("initUsername") String initUsername, @PathParam("recpUsername") String recpUsername, @Context UriInfo context) {
@@ -171,6 +219,13 @@ public class RSFriends {
         return Response.notModified().build();
     }
 
+    /**
+     * Get method to get a friends locations.
+     * @param username clients username
+     * @param friendUsername friends username
+     * @param context
+     * @return list of the friends locations
+     */
     @GET
     @Path("{username}/friend/{friendUsername}/locations")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -185,6 +240,13 @@ public class RSFriends {
         }
         return null;
     }
+    /**
+     * Get method to get a friends check-ins.
+     * @param username clients username
+     * @param friendUsername friends username
+     * @param context
+     * @return list of the friends check-ins.
+     */
     @GET
     @Path("{username}/friend/{friendUsername}/checkins")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -199,6 +261,11 @@ public class RSFriends {
         }
         return null;
     }
+    /**
+     * Method to modify a number to ensure there is no issue when it comes to users storing phone number with 0 or +44
+     * @param number to modify
+     * @return the number with +44 prefix if it starts with 0.
+     */
     public String modifyNumber(String number) {
         if (number.startsWith("0")) {
             return "+44" + number.substring(1);

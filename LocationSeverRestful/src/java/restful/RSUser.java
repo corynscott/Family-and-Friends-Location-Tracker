@@ -27,7 +27,7 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 
 /**
- *
+ * This Class Provides a Restful interface to the system, specifically for UserAccount interactions, path is /user
  * @author Coryn Scott
  */
 @Singleton
@@ -38,12 +38,21 @@ public class RSUser {
     UserSSB ussb;
            
     
+    /**
+     * Get method to return all users of the system, used for testing.
+     * @return list of AppUsers of the system
+     */
     @GET
     @Path("all")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<AppUser> getAllUsersJsonOrXML(){
         return ussb.getAllUsers();
     }
+    /**
+     * Get method to get a specific user's details based on their username
+     * @param username of the user we want to get the details of
+     * @return AppUser for the username passed as a parameter/path
+     */
     @GET
     @Path("{username}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -52,6 +61,12 @@ public class RSUser {
         return ussb.getUser(username);
     }
     
+    /**
+     * Post method to add a new user
+     * @param user AppUser representing the users details
+     * @param context context of the request
+     * @return Response OK-if users is successfully stored, CONFILCT is the username is taken by anther user, or NOTMODIFIFED if the user is not stored for any other reason.
+     */
     @POST
     @Path("add")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -72,6 +87,12 @@ public class RSUser {
     }
     
     
+    /**
+     * Post method to log a user in, this method checks that the user credentials passed in the request are correct
+     * @param user AppUser containing the users username and password
+     * @param context context of the request
+     * @return OK- if the credentials are correct, NOTAUTHORISED if the users credentials are incorrect.
+     */
     @POST
     @Path("login")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -88,6 +109,11 @@ public class RSUser {
         
         
     }
+    /**
+    * Method to modify a number to ensure there is no issue when it comes to users storing phone number with 0 or +44
+     * @param number to modify
+     * @return the number with +44 prefix if it starts with 0.
+     */
     public String modifyNumber(String number){
         if(number.startsWith("0")){
             return "+44" + number.substring(1);

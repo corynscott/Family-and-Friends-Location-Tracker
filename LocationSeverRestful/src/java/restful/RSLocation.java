@@ -27,7 +27,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
- *
+ * This Class Provides a Restful interface to the system, specifically for location interactions
  * @author Coryn Scott
  */
 @Singleton
@@ -38,6 +38,10 @@ public class RSLocation {
     @EJB
     UserSSB ussb;
     
+    /**
+     * Get method to get all users locations, used for testing
+     * @return List of locations for all users
+     */
     @GET
     @Path("locations/all")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -45,6 +49,10 @@ public class RSLocation {
         return lssb.getAllLocations();
     }
     
+    /**
+     * Get method for returning all users check-ins
+     * @return all check-ins (locations) for all users
+     */
     @GET
     @Path("checkIns/all")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -52,6 +60,11 @@ public class RSLocation {
         return lssb.getAllCheckIns();
     }
     
+    /**
+     * Get method for getting a specific users locations
+     * @param username username of the client who's locations we want
+     * @return list of locations for the given username
+     */
     @GET
     @Path("{username}/locations")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -64,6 +77,11 @@ public class RSLocation {
             return null;
     }
     
+    /**
+     * Get method for getting a specific users check-ins (location)
+     * @param username username of the client who's check-ins we want
+     * @return list of check-ins (locations) for the given username 
+     */
     @GET
     @Path("{username}/checkIns")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -75,6 +93,13 @@ public class RSLocation {
             return null;
     }
     
+    /**
+     * Post method to add a location for a specific user
+     * @param location the location we want to store
+     * @param username the username of the user we want to store the location for.
+     * @param context context of the request
+     * @return Response OK- Location stored successfully or NOTMODIFIED-if its not a valid username
+     */
     @POST
     @Path("{username}/addLocation")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -92,6 +117,13 @@ public class RSLocation {
         return Response.notModified().build(); 
     }
     
+    /**
+    * Post method to add a check-in (location) for a specific user
+     * @param location the check-in (location) we want to store
+     * @param username the username of the user we want to store the check-in (location) for.
+     * @param context context of the request
+     * @return Response OK- if the check-in is stored successfully or NOTMODIFIED-if its not a valid username
+     */
     @POST
     @Path("{username}/addCheckIn")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

@@ -10,7 +10,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 /**
- *
+ * Class that saves us from having to specify the restful architecture in XML
  * @author Coryn Scott
  */
 @ApplicationPath("/")
