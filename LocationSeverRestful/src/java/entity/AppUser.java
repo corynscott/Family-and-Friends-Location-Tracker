@@ -209,13 +209,20 @@ public class AppUser implements Serializable {
     }
     
     /**
-     * Method for adding an individual friend to the friend list, takes the friend (AppUser) as a parameter
+     * Method for adding an individual friend to the friend list, takes the friend to be added (AppUser) as a parameter
      * @param au the friend (AppUser) we want to add to the friends list.
      */
     public void addFriend(AppUser au){
         friends.add(au);
     }
     
+    /**
+     * Method for deleting an individual friend from the friend list, takes the friend to be deleted (AppUser) as a parameter
+     * @param au the friend (AppUser) we want to remove from the friends list.
+     */
+    public void deleteFriend(AppUser au){
+        friends.remove(au);
+    }
     /**
      * Method for identifying if a user with the username passed as a parameter is a friend, ie is in the list friends.
      * @param username string username of the user that we want to check 

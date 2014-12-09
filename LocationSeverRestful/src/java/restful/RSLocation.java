@@ -1,12 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package restful;
 
 import ejb.LocationSSB;
 import ejb.UserSSB;
-import entity.AppUser;
 import entity.Location;
 import java.net.URI;
 import java.net.URISyntaxException;

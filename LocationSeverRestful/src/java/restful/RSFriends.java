@@ -261,6 +261,31 @@ public class RSFriends {
         }
         return null;
     }
+    
+    /**
+     * Get method to Delete a friend.
+     * @param initUsername the username of the user who is deleting the friend.
+     * @param recpUsername the username of the user who is being unfriended.
+     * @param context context of the request.
+     * @return Response OK - friendship has been successfully been deleted, NOTMODIFIED if the friendship between these two users does not exist.
+     */
+    @GET
+    @Path("{initUsername}/deletefriend/{recpUsername}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response deleteFriendrequestJsonOrXML(@PathParam("initUsername") String initUsername, @PathParam("recpUsername") String recpUsername, @Context UriInfo context) {
+        if (ussb.doesUsernameExist(recpUsername) && ussb.doesUsernameExist(initUsername)) {
+            AppUser initUser = ussb.getUser(initUsername);
+            AppUser recpUser = ussb.getUser(recpUsername);
+            if(initUser.isFriend(recpUsername)){
+                initUser.deleteFriend(recpUser);
+                recpUser.deleteFriend(initUser);
+                return Response.ok().build();
+            }
+                
+        }
+        return Response.notModified().build();
+    }
+    
     /**
      * Method to modify a number to ensure there is no issue when it comes to users storing phone number with 0 or +44
      * @param number to modify
