@@ -4,39 +4,11 @@
     tools:context=".MapActivity"
     android:id="@+id/menu_set">
     <item android:id = "@+id/auth_update"
-        android:title="Update ON"
+        android:title="@string/update_on"
         android:orderInCategory="100"
-        android:onClick="startUpdates"/>
-    <item android:id = "@+id/stop_update"
-        android:title="Update OFF"
+        app:showAsAction="always"/>
+    <item android:id="@+id/clear_map"
+        android:title="@string/clear_map"
         android:orderInCategory="100"
-        android:onClick="stopUpdates"/>
-    <item android:id = "@+id/getLocationULI"
-        android:title="ULI Location"
-        android:orderInCategory="100"
-        android:onClick="getLocationULI"/>
-    <item android:id = "@+id/getLocationALL"
-        android:title="ALL Location"
-        android:orderInCategory="100"
-        android:onClick="getLocationALL"/>
-    <item android:id = "@+id/getPlaces"
-        android:title="Places"
-        android:orderInCategory="100"
-        android:onClick="getPlaces"/>
-
-    <item android:id = "@+id/checkNumber"
-        android:title="CheckNumber"
-        android:orderInCategory="100"
-        android:onClick="checkNumber"/>
-    
-    <item android:id = "@+id/contact_id"
-        android:title="Contact"
-        android:orderInCategory="100"
-        android:onClick="getContact"/>
-    
-    <item android:id = "@+id/logout"
-        android:title="Logout"
-        android:orderInCategory="100"
-        android:onClick="functionLogout"/>
-    
+        app:showAsAction = "always"/>
 </menu>

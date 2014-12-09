@@ -1,11 +1,27 @@
 package map.teamc.com.maplocationproject;
 
-import java.util.ArrayList;
-
+/**
+ * 
+ * 		Class for the friend's object
+ *
+ */
 public class Friend {
+	
+	/*
+	 * Username of the friend
+	 */
 	private String username;
 	
-	private ArrayList<Checkin> location = new ArrayList<Checkin>();
+	/*
+	 * Phone number of the friend
+	 */
+	private String phoneNumber;
+	
+	/*
+	 * Name of the friend
+	 */
+	private String name;
+	
 	
 	public void setUsername(String username){
 		this.username = username;
@@ -15,11 +31,20 @@ public class Friend {
 		return this.username;
 	}
 	
-	public void setCheckin(ArrayList<Checkin> location){
-		this.location = location;
+	public void setPhoneNumber(String phoneNumber){
+		this.phoneNumber = phoneNumber;
 	}
 	
-	public ArrayList<Checkin> getCheckin(){
-		return this.location;
+	public String getPhoneNumber(){
+		return this.phoneNumber;
 	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	public String getName(){
+		return this.name;
+	}
+	
 }

@@ -13,9 +13,14 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 /**
- * Created by alex64 on 06/11/2014.
+ * 		Class that makes the call to GooglePlaces
+ *
  */
 public class PlacesService {
+	
+	/*
+	 * Variable that will contain the API KEY for making a call to the GooglePlaces API
+	 */
     private String API_KEY;
 
     public PlacesService(String apikey){
@@ -26,6 +31,17 @@ public class PlacesService {
         this.API_KEY = apikey;
     }
 
+    /**
+     * 		Code that will return a list of places from GooglePlaces
+     * @param latitude
+     * 		User's latitude location
+     * @param longitude
+     * 		User's longitude location
+     * @param placeSpecification
+     * 		User's specification for searching a place (always empty)
+     * @return 
+     * 		Return an ArrayList of Places
+     */
     public ArrayList<Place> findPlaces(double latitude, double longitude,
                                        String placeSpecification){
         String urlString = makeURL (latitude, longitude, placeSpecification);
@@ -54,7 +70,18 @@ public class PlacesService {
         return null;
     }
 
-    private String makeURL(double latitude, double longitude, String place){
+    /**
+     * 		Code to generate the URL that will be used to make the request to GooglePlaces
+     * @param latitude
+     * 		User's latitude location
+     * @param longitude
+     * 		User's longitude location
+     * @param place
+     * 		User's specification for searching a place (always empty)
+     * @return 
+     * 		String of the URL
+     */
+    public String makeURL(double latitude, double longitude, String place){
         String searchType="search";
         StringBuilder urlString =
                 new StringBuilder("https://maps.googleapis.com/maps/api/place/" + searchType + "/json?");
@@ -84,11 +111,23 @@ public class PlacesService {
         return urlString.toString();
     }
 
+    /**
+     * 		Code to get the URL contents
+     * @param url
+     * @return 
+     * 		String of the JSON
+     */
     protected String getJSON(String url){
         return getUrlContents(url);
     }
 
-    private String getUrlContents(String theUrl) {
+    /**
+     * 		Code to get the URL contents
+     * @param url
+     * @return 
+     * 		String of the contents
+     */
+    public String getUrlContents(String theUrl) {
         StringBuilder content = new StringBuilder();
         try {
             URL url = new URL(theUrl);

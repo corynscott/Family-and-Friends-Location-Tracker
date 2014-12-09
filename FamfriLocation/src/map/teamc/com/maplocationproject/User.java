@@ -2,26 +2,40 @@ package map.teamc.com.maplocationproject;
 
 /**
  * 
- * @Class: User
- * @Description
  * 		Class that contains the user information - Register
- * @Created: 18/11/2014
  *
  */
 public class User {
 
+	/*
+	 * Username to register
+	 */
 	private String userName;
+	
+	/*
+	 * Name to register
+	 */
 	private String name;
+	
+	/*
+	 * Phone number to register
+	 */
 	private String phoneNumber;
+	
+	/*
+	 * Password to be registered
+	 */
 	private String pwd;
-	private boolean numberChecked;
+	
+	public User(){
+		
+	}
 
 	User(String user, String name, String phone, String pass){
 		this.userName = user;
 		this.name = name;
 		this.phoneNumber = phone;
 		this.pwd = pass;
-		this.numberChecked = false;
 	}
 	
 	public String getUserName() {
@@ -47,14 +61,6 @@ public class User {
 	}
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
-	}
-	
-	public boolean isNumberChecked() {
-		return numberChecked;
-	}
-
-	public void setNumberChecked(boolean numberChecked) {
-		this.numberChecked = numberChecked;
 	}
 	
 	@Override

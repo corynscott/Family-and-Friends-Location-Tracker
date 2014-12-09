@@ -5,19 +5,41 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
-
 
 /**
- * Created by alex64 on 06/11/2014.
+ * 		Class for the Places object obtained through GooglePlaces API
+ *
  */
 public class Place  {
 
+	/*
+	 * The id of the place
+	 */
     private String id;
+    
+    /*
+     * The icon of the place (if any)
+     */
     private String icon;
+    
+    /*
+     * The name of the place
+     */
     private String name;
+    
+    /*
+     * The address of the place
+     */
     private String vicinity;
+    
+    /*
+     * The latitude where the place is located
+     */
     private Double latitude;
+    
+    /*
+     * The longitude where the place is located
+     */
     private Double longitude;
 
 
@@ -69,7 +91,14 @@ public class Place  {
         this.longitude = longitude;
     }
 
-     static Place jsonReference(JSONObject reference){
+    /**
+     * 		Obtain a Place object from a JSON element obtained from the response of GooglePlaces
+     * @param reference
+     * 		JSON element
+     * @return 
+     * 		Return a Place object with the data obtained from the JSON element
+     */
+     public static Place jsonReference(JSONObject reference){
          Place result =  new Place();
         try{
 

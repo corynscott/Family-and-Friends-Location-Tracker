@@ -1,22 +1,56 @@
 package map.teamc.com.maplocationproject;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by alex64 on 30/10/2014.
+ * 		Class that manages the objects of the periodical updates of the user's location
+ *
  */
+@SuppressLint("SimpleDateFormat")
 public class UserLocation{
+	
+	/*
+	 * Username of the application
+	 */
     private String username;
+    
+    /*
+     * Date where the location was stored
+     */
     private String date;
+    
+    /*
+     * Longitude value of the stored location
+     */
     private double longitude;
+    
+    /*
+     * Latitude value of the stored location
+     */
     private double latitude;
+    
+    /*
+     * Whether the location is or not a checkin (if is false, the data is a location)
+     */
     private boolean checkin;
+    
+    /*
+     * Comment for checkin, if the data stored is a location the value will be "none"
+     */
     private String comment;
+    
+    /*
+     * Place name for a checkin, if the data stored is a location the value will be "none" 
+     */
     private String placeName;
+    
+    /*
+     * The Unique Location Identifier"
+     */
     private String uli;
 
     
@@ -25,15 +59,6 @@ public class UserLocation{
     	
     }
     
-	/**
-     * @Constructor UserLocation
-     * @Description
-     * 		Constructor for Location
-     * @param username
-     * @param time
-     * @param longitude
-     * @param latitude
-     */
     public UserLocation(String username, String time, double longitude, double latitude){
         this.username = username;
         this.date = stringDate(time);
@@ -44,15 +69,6 @@ public class UserLocation{
         this.placeName = "none";
     }
     
-    /**
-     * @Constructor UserLocation
-     * @Description
-     * 		Constructor for Checkin
-     * @param username
-     * @param time
-     * @param longitude
-     * @param latitude
-     */
     public UserLocation(String username, String time, double longitude, double latitude, 
     		boolean checkin, String comment, String placeName){
     	this.username = username;
@@ -63,14 +79,6 @@ public class UserLocation{
         this.comment  = comment;
         this.placeName = placeName;
     }
-
-    /*public UserLocation(String uli, String username, String date, double longitude, double latitude){
-        this.uli = uli;
-        this.username = username;
-        this.date = date;
-        this.longitude = longitude;
-        this.latitude = latitude;
-    }*/
 
     public void setUsername(String username){
         this.username = username;
@@ -136,25 +144,15 @@ public class UserLocation{
 		this.uli = uli;
 	}
 
-    public String generateULI(String time){
-        Date d = new Date(Long.parseLong(time));
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(d);
-        int month, day, hour, minute,second;
-        month = cal.get(Calendar.MONTH) + 1;
-        day = cal.get(Calendar.DAY_OF_MONTH);
-        hour = cal.get(Calendar.HOUR);
-        minute = cal.get(Calendar.MINUTE);
-        second = cal.get(Calendar.SECOND);
-        return "" + cal.get(Calendar.YEAR) +
-                ((month < 10) ?  "0" + month :   month) +
-                ((day < 10) ?  "0" + day :   day) +
-                ((hour < 10) ?  "0" + hour :   hour) +
-                ((minute < 10) ?  "0" + minute :   minute) +
-                ((second < 10) ?  "0" + second :   second);
-    }
-
-    public String stringDate(String time){
+	/**
+     * 		Code that transforms the string date to another Date format
+     * @param time
+     * 		String value of the date
+     * @return
+     * 		A String value with the new date's format
+     * 
+     */
+    private String stringDate(String time){
         Date d = new Date(Long.parseLong(time));
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:sss'Z'");
         String date = dateFormat.format(d);
