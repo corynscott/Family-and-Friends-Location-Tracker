@@ -3,7 +3,7 @@ Team-C
 
 This is the Git repository for Team C's Android Application as part of the Advamced Computer Science MSc course 2014.
 
-Code solely written by Coryn Scott includes - Basic server, LocationServerRestful and ClientTestSuit.
+Code solely written by Coryn Scott includes - Basic server, LocationServerRestful and ClientTestSuite.
 
 The project consists of 2 Core elements the Android Application (FamfriLocation) and a RESTful server (LocationServerRestful). The RESTful server was developed using a TDD approach and as such the test suite is included (ClientTestSuite).
 
